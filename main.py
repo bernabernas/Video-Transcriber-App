@@ -20,9 +20,7 @@ def generate_answer_window(resumo, event=None):
     text = tk.Text(root, height=8, width=40, wrap="word", font=("Arial", 14))
     text.grid(row=2, column=0, padx=10, pady=10, sticky="nsew")
     text.insert("1.0", resumo)
-    #label.update_idletasks()  # Ensures accurate size measurement
-    #label.config(width=label.winfo_reqwidth(), height=label.winfo_reqheight())
-    #janela.mainloop()
+   
     
  
     
@@ -30,7 +28,7 @@ def generate_answer_window(resumo, event=None):
 def download_video(url):
     
     
-    try: #Pesquisar sobre o comando try
+    try:
         yt = YouTube(url)
     
     except: 
@@ -59,7 +57,7 @@ def converter_em_mp3(input_video, output_audio):
     video.audio.write_audiofile(output_audio)
     
     
-def transcrever(output_audio): #Vai ter que passar a variável do end do audio como parâmetro
+def transcrever(output_audio): 
     model = whisper.load_model("small")#Escolha do modelo whisper
     result = model.transcribe(output_audio)#Indicando file que o modelo vai transcrever
     transcrito = result["text"]
@@ -77,8 +75,8 @@ def resumir(transcrito):
    return summary
 
 def summarize(event=None):
-    CURRENT_DIRECTORY = os.path.dirname(__file__) #Gets the directory where python app is
-    AUDIO_SAVE_PATH = os.path.join(CURRENT_DIRECTORY, "audio.mp3") #Creates the file path including the working directory
+    CURRENT_DIRECTORY = os.path.dirname(__file__) #Diretório onde o app está
+    AUDIO_SAVE_PATH = os.path.join(CURRENT_DIRECTORY, "audio.mp3") #Cria o path onde o app está rodando
     url = get_url()
     input_video = download_video(url)
     converter_em_mp3(input_video, AUDIO_SAVE_PATH)
@@ -86,12 +84,12 @@ def summarize(event=None):
     resumo = resumir(transcrito)
     
     #Delete downloaded files
-    if os.path.exists(AUDIO_SAVE_PATH):  # Check if the file exists before deleting
+    if os.path.exists(AUDIO_SAVE_PATH):  # Checa se a file de audio existe antes de apagar
         os.remove(AUDIO_SAVE_PATH)
         print("Audio file deleted successfully.")
     else:
         print("Audio file not found.")
-    if os.path.exists(input_video):  # Check if the file exists before deleting
+    if os.path.exists(input_video):  #  Checa se a file de video existe antes de apagar
         os.remove(input_video)
         print("Video file deleted successfully.")
     else:
@@ -108,8 +106,8 @@ CURRENT_DIRECTORY = os.path.dirname(__file__) #Gets the directory where python a
 AUDIO_SAVE_PATH = os.path.join(CURRENT_DIRECTORY, "audio.mp3") #Creates the file path including the working directory
 
 
-#Initialize GUI:
-root = tk.Tk() #Creates main window
+#Inicializa GUI:
+root = tk.Tk() #Main Window
 root.title("transcribe Video APP")
     
 root.columnconfigure(0, weight=5)
